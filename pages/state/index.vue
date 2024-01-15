@@ -97,8 +97,15 @@ const clearData = async () => {
 
     <div>
       <h1>Ultis</h1>
-      <!-- <label> Utils index {{ formatNumber(1.78) }}</label> -->
       <label> Utils format currentcy {{ formatCurrency(1200000) }}</label>
+    </div>
+
+    <Comments />
+
+    <div>
+
+      <h1>Nuxt Content</h1>
+      <ContentDoc />
     </div>
   </div>
 </template>

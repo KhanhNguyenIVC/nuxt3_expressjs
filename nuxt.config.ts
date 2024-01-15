@@ -35,5 +35,12 @@ export default defineNuxtConfig({
         config.plugins.push(vuetify({ autoImport: true }))
       })
     },
+    '@nuxt/content',
   ],
+  content: {
+
+  },
+  routeRules: {
+    '/old-page': { redirect: '/state' }
+  }
 })

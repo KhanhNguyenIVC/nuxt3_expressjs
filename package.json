@@ -18,6 +18,7 @@
     "vuetify": "^3.4.10"
   },
   "dependencies": {
-    "@mdi/font": "^7.4.47"
+    "@mdi/font": "^7.4.47",
+    "@nuxt/content": "^2.10.0"
   }
 }
