@@ -4,6 +4,6 @@ console.log('CSR in Comments components');
 
 <template>
     <div>
-        component client
+        Comments component client
     </div>
 </template>

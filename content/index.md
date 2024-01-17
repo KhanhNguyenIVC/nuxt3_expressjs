@@ -1,3 +1,0 @@
-#Nuxt Content
-
-Hello content

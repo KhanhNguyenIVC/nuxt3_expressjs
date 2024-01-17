@@ -4,6 +4,6 @@ console.log('SSR in Comments components');
 
 <template>
     <div>
-        component server side rendering
+        Comments component server side rendering
     </div>
 </template>

@@ -1,6 +1,8 @@
+<!-- Created for nuxt content -->
+<script setup></script>
+
 <template>
   <main>
-    <span>custom content</span>
     <ContentDoc />
   </main>
 </template>

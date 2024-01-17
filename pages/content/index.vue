@@ -1,15 +1,11 @@
-<script setup>
-console.log("init content");
-</script>
+<script setup></script>
 
 <template>
-  <main>
-    <div>
-      <ContentDoc>
-        <template #not-found>
-          <span>Document not found</span>
-        </template>
-      </ContentDoc>
-    </div>
-  </main>
+  <div>
+    <h1>Nuxt Content</h1>
+
+    <ContentDoc>
+      <template #not-found> <h3>Document not found</h3> </template>
+    </ContentDoc>
+  </div>
 </template>

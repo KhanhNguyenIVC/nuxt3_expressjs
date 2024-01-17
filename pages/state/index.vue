@@ -101,11 +101,5 @@ const clearData = async () => {
     </div>
 
     <Comments />
-
-    <div>
-
-      <h1>Nuxt Content</h1>
-      <ContentDoc />
-    </div>
   </div>
 </template>

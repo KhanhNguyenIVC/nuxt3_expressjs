@@ -18,6 +18,9 @@ export default defineNuxtConfig({
   },
   css: ['~/assets/css/main.css'],
   app: {
+    head: {
+      // title: 'Nuxt 3'
+    },
     pageTransition: { name: 'page', mode: 'out-in' }
   },
   runtimeConfig: {
@@ -29,18 +32,24 @@ export default defineNuxtConfig({
     transpile: ['vuetify'],
   },
   modules: [
+    '@nuxt/content',
     (_options, nuxt) => {
       nuxt.hooks.hook('vite:extendConfig', (config) => {
         // @ts-expect-error
         config.plugins.push(vuetify({ autoImport: true }))
       })
     },
-    '@nuxt/content',
   ],
   content: {
-
   },
   routeRules: {
     '/old-page': { redirect: '/state' }
+  },
+  plugins: [
+    '~/plugins/hello'
+  ],
+  sourcemap: {
+    server: true,
+    client: true
   }
 })
