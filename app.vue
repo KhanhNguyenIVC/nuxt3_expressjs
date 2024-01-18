@@ -26,11 +26,12 @@ useHead({
 <template>
   <!-- Components SEO -->
   <Meta name="second_description" :content="descriptionMeta"></Meta>
-  <NuxtLayout>
-    <v-app>
-      <NuxtPage />
-    </v-app>
-  </NuxtLayout>
+    <NuxtLayout>
+      <NuxtLoadingIndicator color="#348feb" :height="5" />
+      <v-app>
+        <NuxtPage />
+      </v-app>
+    </NuxtLayout>
 </template>
 
 <style>

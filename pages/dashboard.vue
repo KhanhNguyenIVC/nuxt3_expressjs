@@ -3,8 +3,8 @@ definePageMeta({
   middleware: "dashboard",
 });
 
-const isLogin = useCookie('isLogin')
-console.log('get cookie isLogin', isLogin.value);
+const isLogin = useCookie("isLogin");
+console.log("get cookie isLogin", isLogin.value);
 
 let { data: dataFetch } = await useFetch(
   "https://jsonplaceholder.typicode.com/todos/1"
@@ -32,13 +32,13 @@ const refreshData = async () => {
 };
 
 const clearData = async () => {
-  console.log('handle clear');
+  console.log("handle clear");
   try {
-    await clearNuxtData ()
+    await clearNuxtData();
   } finally {
     console.log("clear has done");
   }
-}
+};
 </script>
 
 <template>
@@ -58,6 +58,9 @@ const clearData = async () => {
           <p>Title: {{ asyncData ? asyncData.title : null }}</p>
         </div>
 
+        <v-btn @click="refreshData">refreshAllData</v-btn>
+        <v-btn @click="clearData">clearAllData</v-btn>
+
         <div>
           <h3>Get data by useLazyAsyncData</h3>
           <div v-if="pending"><h1>Loading lazy....</h1></div>
@@ -68,8 +71,9 @@ const clearData = async () => {
               </li>
             </ul>
           </div>
-          <button @click="refreshData">refreshAllData</button>
-          <button @click="clearData">clearAllData</button>
+          <br />
+          <br />
+          <br />
         </div>
       </div>
 

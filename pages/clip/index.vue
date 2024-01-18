@@ -1,6 +1,5 @@
 <script setup>
 const { $api } = useNuxtApp();
-const route = useRoute();
 const snackBarText = ref("Update success");
 const snackbar = ref(false);
 const isLoading = ref(false);
@@ -9,10 +8,6 @@ const videoSelected = ref({
   poster: null,
   duration: null,
 });
-
-// const rules = (value) => {
-//   return value ? true : "abc";
-// };
 
 const rules = ref([
   (value) => {
@@ -47,8 +42,8 @@ function renewVideo() {
 
 const add = async () => {
   isLoading.value = true;
-  if(videoSelected.value.title == null) {
-    return
+  if (videoSelected.value.title == null) {
+    return;
   }
 
   if (isLoading.value) {
@@ -117,80 +112,96 @@ const clearData = async () => {
     console.log("clear has done");
   }
 };
+
+const someErrorLogger = () => {
+  console.log('inside boundary');
+  snackBarText.value = "Got an error in nuxt error boundary";
+  snackbar.value = true;
+};
 </script>
 
 <template>
   <div>
-    <v-card class="mx-auto" width="1000" prepend-icon="mdi-home">
-      <template v-slot:title> Videos </template>
-      <v-container>
-        <v-row>
-          <v-col>
-            <select
-              class="video-combobox"
-              @change="onChange($event)"
-              v-model="videoSelected"
-            >
-              <option v-for="video in videos" :key="video.id" :value="video.id">
-                {{ video.title }}
-              </option>
-            </select>
-          </v-col>
-        </v-row>
-        <video controls muted class="mt-1">
-          <source :src="srcVideo" type="video/mp4" />
-        </video>
-      </v-container>
-
-      <!-- <v-combobox
-        label="Pick one"
-        :items="videos"
-        v-model="videoSelected"
-        @change="onChange($event)"
-      ></v-combobox> -->
-
-      <v-form>
+    <NuxtErrorBoundary @error="someErrorLogger">
+      <v-card class="mx-auto" width="1000" prepend-icon="mdi-home">
+        <template v-slot:title> Videos </template>
         <v-container>
           <v-row>
-            <v-col cols="12" md="4">
-              <v-text-field
-                v-model="videoSelected.title"
-                :rules="rules"
-                label="Title"
-              ></v-text-field>
-            </v-col>
-
-            <v-col cols="12" md="4">
-              <v-text-field
-                v-model="videoSelected.poster"
-                label="Poster"
-                hide-details
-                required
-              ></v-text-field>
-            </v-col>
-
-            <v-col cols="12" md="4">
-              <v-text-field
-                v-model="videoSelected.duration"
-                label="Duration"
-                hide-details
-                required
-              ></v-text-field>
+            <v-col>
+              <select
+                class="video-combobox"
+                @change="onChange($event)"
+                v-model="videoSelected"
+              >
+                <option
+                  v-for="video in videos"
+                  :key="video.id"
+                  :value="video.id"
+                >
+                  {{ video.title }}
+                </option>
+              </select>
             </v-col>
           </v-row>
-          <div class="mt-2">
-            <v-btn class="me-2" @click="add">Add</v-btn>
-            <v-btn class="me-2" @click="edit">Edit</v-btn>
-            <v-btn @click="deleteVideo">Delete</v-btn>
-          </div>
+          <video controls muted class="mt-1">
+            <source :src="srcVideo" type="video/mp4" />
+          </video>
         </v-container>
-      </v-form>
-      <hr />
-      <v-col cols="auto">
-        <v-btn class="me-2" @click="clearData">Clear</v-btn>
-        <v-btn @click="refreshData">Refresh</v-btn>
-      </v-col>
-    </v-card>
+
+        <!-- <v-combobox
+          label="Pick one"
+          :items="videos"
+          v-model="videoSelected"
+          @change="onChange($event)"
+        ></v-combobox> -->
+
+        <v-form>
+          <v-container>
+            <v-row>
+              <v-col cols="12" md="4">
+                <v-text-field
+                  v-model="videoSelected.title"
+                  :rules="rules"
+                  label="Title"
+                ></v-text-field>
+              </v-col>
+
+              <v-col cols="12" md="4">
+                <v-text-field
+                  v-model="videoSelected.poster"
+                  label="Poster"
+                  hide-details
+                  required
+                ></v-text-field>
+              </v-col>
+
+              <v-col cols="12" md="4">
+                <v-text-field
+                  v-model="videoSelected.duration"
+                  label="Duration"
+                  hide-details
+                  required
+                ></v-text-field>
+              </v-col>
+            </v-row>
+            <div class="mt-2">
+              <v-btn class="me-2" @click="add">Add</v-btn>
+              <v-btn class="me-2" @click="edit">Edit</v-btn>
+              <v-btn @click="deleteVideo">Delete</v-btn>
+            </div>
+          </v-container>
+        </v-form>
+        <hr />
+        <v-col cols="auto">
+          <v-btn class="me-2" @click="clearData">Clear</v-btn>
+          <v-btn @click="refreshData">Refresh</v-btn>
+        </v-col>
+      </v-card>
+
+      <template #error="{ error }">
+        <p>An error occurred: {{ error }}</p>
+      </template>
+    </NuxtErrorBoundary>
 
     <v-snackbar v-model="snackbar">
       {{ snackBarText }}

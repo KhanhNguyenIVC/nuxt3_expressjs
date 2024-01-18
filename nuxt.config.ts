@@ -24,6 +24,7 @@ export default defineNuxtConfig({
     pageTransition: { name: 'page', mode: 'out-in' }
   },
   runtimeConfig: {
+    apiSecret: '123',
     public: {
       apiBaseUrl: process.env.API_BASE_URL
     }
@@ -32,7 +33,9 @@ export default defineNuxtConfig({
     transpile: ['vuetify'],
   },
   modules: [
+    '@nuxt/image',
     '@nuxt/content',
+    '@pinia/nuxt',
     (_options, nuxt) => {
       nuxt.hooks.hook('vite:extendConfig', (config) => {
         // @ts-expect-error
@@ -40,16 +43,25 @@ export default defineNuxtConfig({
       })
     },
   ],
-  content: {
+  experimental: {
+    clientFallback: true,
+    componentIslands: true,
   },
   routeRules: {
     '/old-page': { redirect: '/state' }
   },
-  plugins: [
-    '~/plugins/hello'
-  ],
-  sourcemap: {
-    server: true,
-    client: true
+  image: {
+    // dir: '', // default 'public'
+    provider: 'ipx',
+    domains: ['nuxtjs.org'],
+    presets: {
+      avatar: {
+        modifiers: {
+          format: 'jpg',
+          width: 50,
+          height: 50
+        }
+      }
+    }
   }
 })

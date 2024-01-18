@@ -25,6 +25,7 @@ const clearData = async () => {
   console.log("handle clear");
   try {
     await clearNuxtData();
+    await clearNuxtState();
   } finally {
     console.log("clear has done");
   }
@@ -101,5 +102,21 @@ const clearData = async () => {
     </div>
 
     <Comments />
+
+    <div>
+      <h1>ClientOnly</h1>
+      <ClientOnly>
+        <template #fallback>
+          <!-- this will be rendered on server side -->
+          <p>Loading comments at SSR...</p>
+        </template>
+        Client Side Rendering
+        <NuxtClientFallback>
+          <template #fallback>
+            <p>Hello world</p>
+          </template>
+        </NuxtClientFallback>
+      </ClientOnly>
+    </div>
   </div>
 </template>
