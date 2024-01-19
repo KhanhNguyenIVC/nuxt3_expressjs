@@ -6,7 +6,10 @@ const Country = sequelize.define('country', {
         type: DataTypes.STRING,
     },
     country_flag: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        validate: {
+            is: /^[A-Z]{5}$/i
+        }
     }
 }, {
     // Other model options go here

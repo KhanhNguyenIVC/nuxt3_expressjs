@@ -47,7 +47,6 @@ const add = async () => {
   }
 
   if (isLoading.value) {
-    console.log("inside add 1111");
     const { data: doAdd } = await $api.videos.add({
       title: videoSelected.value.title,
       poster: videoSelected.value.poster,

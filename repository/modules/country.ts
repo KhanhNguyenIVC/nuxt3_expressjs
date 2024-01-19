@@ -5,9 +5,26 @@ class CountryModule {
     private RESOURCE = '/countries'
 
     async getAllCountries() {
-        return await useAsyncData(() => 
+        return await useAsyncData(() =>
             $fetch(`${this.BASE_URL}${this.RESOURCE}`, {
                 method: 'GET'
+            })
+        )
+    }
+
+    async detail(id: string) {
+        return await useAsyncData(() =>
+            $fetch(`${this.BASE_URL}${this.RESOURCE}/${id}`, {
+                method: 'GET'
+            })
+        )
+    }
+
+    async edit(data: object) {
+        return await useAsyncData(() => 
+            $fetch(`${this.BASE_URL}${this.RESOURCE}`, {
+                method: 'PUT',
+                body: data
             })
         )
     }
