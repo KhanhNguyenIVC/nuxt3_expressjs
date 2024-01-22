@@ -1,5 +1,7 @@
 <script setup>
-const { data } = await useFetch('/api/hello')
+const { $api } = useNuxtApp();
+
+const { data: teams } = await $api.teams.getAll();
 
 const clearData = async () => {
   console.log("handle clear");
@@ -25,10 +27,10 @@ const refreshData = async () => {
     <div>
         Server papge
         <pre>
-            {{ data }}
+            {{ teams }}
         </pre>
 
-        <button @click="clearData">Clear</button>
-        <button @click="refreshData">Refresh</button>
+        <v-btn @click="clearData">Clear</v-btn>
+        <v-btn @click="refreshData">Refresh</v-btn>
     </div>
 </template>
