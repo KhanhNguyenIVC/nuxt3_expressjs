@@ -38,7 +38,6 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     (_options, nuxt) => {
       nuxt.hooks.hook('vite:extendConfig', (config) => {
-        // @ts-expect-error
         config.plugins.push(vuetify({ autoImport: true }))
       })
     },
@@ -48,7 +47,16 @@ export default defineNuxtConfig({
     componentIslands: true,
   },
   routeRules: {
-    '/old-page': { redirect: '/state' }
+    '/old-page': { redirect: '/state' },
+    // '/blog/**': { swr: true },
+    // '/blog/**': { swr: 600 },
+    // '/blog/**': { static: true },
+    // '/blog/**': { cache: { /* cache options*/ } },
+    // '/assets/**': { headers: { 'cache-control': 's-maxage=0' } },
+    // '/api/v1/**': { cors: true, headers: { 'access-control-allow-methods': 'GET' } },
+    // '/old-page': { redirect: '/new-page' },
+    // '/proxy/example': { proxy: 'https://example.com' },
+    // '/proxy/**': { proxy: '/api/**' },
   },
   image: {
     // dir: '', // default 'public'
