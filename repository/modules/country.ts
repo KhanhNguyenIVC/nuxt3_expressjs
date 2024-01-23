@@ -7,7 +7,10 @@ class CountryModule {
     async getAllCountries() {
         return await useAsyncData(() =>
             $fetch(`${this.BASE_URL}${this.RESOURCE}`, {
-                method: 'GET'
+                method: 'GET',
+                headers: new Headers({
+                    "ngrok-skip-browser-warning": "69420",
+                }),
             })
         )
     }
@@ -15,15 +18,21 @@ class CountryModule {
     async detail(id: string) {
         return await useAsyncData(() =>
             $fetch(`${this.BASE_URL}${this.RESOURCE}/${id}`, {
-                method: 'GET'
+                method: 'GET',
+                headers: new Headers({
+                    "ngrok-skip-browser-warning": "69420",
+                }),
             })
         )
     }
 
     async edit(data: object) {
-        return await useAsyncData(() => 
+        return await useAsyncData(() =>
             $fetch(`${this.BASE_URL}${this.RESOURCE}`, {
                 method: 'PUT',
+                headers: new Headers({
+                    "ngrok-skip-browser-warning": "69420",
+                }),
                 body: data
             })
         )
