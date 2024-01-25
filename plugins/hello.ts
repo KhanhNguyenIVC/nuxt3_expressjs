@@ -1,7 +1,8 @@
 export default defineNuxtPlugin((nuxtApp) => {
     console.log('hello from Hello plugins || is server side: ', process.server);
     nuxtApp.hook('app:created', () => {
-        console.log('app:created in nuxtApp hook || is server side: ', process.server)
+        const header = useRequestHeaders(['cookie'])
+        console.log('app:created in nuxtApp hook || all cookie:', header, ' || is server side: ', process.server)
     })
 
     nuxtApp.hook('page:finish', () => {

@@ -11,6 +11,10 @@ import TSXComponent from "~/components/TSXComponent";
         NuxtIsland
         <NuxtIsland name="Hello" />
 
+        <!-- <hr>
+        Hello2 component
+        <Hello2/> -->
+
         <hr>
         TSX
         <ClientOnly>

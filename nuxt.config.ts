@@ -48,6 +48,7 @@ export default defineNuxtConfig({
   },
   routeRules: {
     '/old-page': { redirect: '/state' },
+    // '/island' : {ssr : false} // only on client-side
     // '/blog/**': { swr: true },
     // '/blog/**': { swr: 600 },
     // '/blog/**': { static: true },

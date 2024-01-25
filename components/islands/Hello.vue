@@ -1,5 +1,5 @@
 <script setup>
-console.log('Server side in island Hello components');
+console.log('Server side in island Hello components', process.server);
 </script>
 
 <template>
