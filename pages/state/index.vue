@@ -1,5 +1,7 @@
 <script setup>
 const isSubmit = ref(false);
+const envConfig = useEnv()
+console.log('useRuntimeConfig in nuxtConfig',  'get apiSecrect: ', envConfig.apiSecret, 'get apiPublic: ', envConfig.public.apiPublic)
 
 // Sign state
 const numberState = useState("numberState", () => 0);

@@ -24,9 +24,11 @@ export default defineNuxtConfig({
     pageTransition: { name: 'page', mode: 'out-in' }
   },
   runtimeConfig: {
-    apiSecret: '123',
+    apiSecret: process.env.SECRECT_API,
     public: {
-      apiBaseUrl: process.env.API_BASE_URL
+      // Client side
+      apiBaseUrl: process.env.API_BASE_URL,
+      apiPublic: process.env.PUBLIC_API,
     }
   },
   build: {
