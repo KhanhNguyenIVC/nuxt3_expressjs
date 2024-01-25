@@ -60,8 +60,14 @@ export default defineNuxtConfig({
   },
   image: {
     // dir: '', // default 'public'
-    provider: 'ipx',
-    domains: ['nuxtjs.org'],
+    // provider: 'cloudinary',
+    cloudinary: {
+      baseURL: 'https://res.cloudinary.com/demo/image/upload/fl_lossy/',
+      // modifiers: {
+      //   effect: 'sharpen:100',
+      //   quality: 'auto:best',
+      // }
+    },
     presets: {
       avatar: {
         modifiers: {
@@ -70,6 +76,7 @@ export default defineNuxtConfig({
           height: 50
         }
       }
-    }
+    },
+    // dir: 'assets/images',
   }
 })
