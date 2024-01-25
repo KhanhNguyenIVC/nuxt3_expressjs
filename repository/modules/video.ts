@@ -1,71 +1,32 @@
+import { useCustomFetch } from "../../composables/customFetch"
 
 class VideosModule {
     private runtimeConfig = useRuntimeConfig()
-    private BASE_URL = this.runtimeConfig.public.apiBaseUrl
-    private RESOURCE = '/videos'
+    private BASE_URL = this.runtimeConfig.public.apiBaseUrl + '/videos'
 
     async getAllVideos() {
-        return await useAsyncData(() =>
-            $fetch(`${this.BASE_URL}${this.RESOURCE}`, {
-                method: 'GET',
-                headers: new Headers({
-                    "ngrok-skip-browser-warning": "69420",
-                }),
-            })
-        )
+        return await useCustomFetch('GET', this.BASE_URL)
     }
 
     async getVideoDetail(id: string) {
-        return await useAsyncData(() =>
-            $fetch(`${this.BASE_URL}${this.RESOURCE}/${id}`, {
-                method: 'GET',
-                headers: new Headers({
-                    "ngrok-skip-browser-warning": "69420",
-                }),
-            })
-        )
+        return await useCustomFetch("GET", `${this.BASE_URL}/${id}`)
     }
 
     async add(data: object) {
-        return await useAsyncData(() =>
-            $fetch(`${this.BASE_URL}${this.RESOURCE}`, {
-                method: 'POST',
-                headers: new Headers({
-                    "ngrok-skip-browser-warning": "69420",
-                }),
-                body: data
-            })
-        )
+        return await useCustomFetch("POST", this.BASE_URL, data)
     }
 
     async edit(data: object) {
-        return await useAsyncData(() =>
-            $fetch(`${this.BASE_URL}${this.RESOURCE}`, {
-                method: 'PUT',
-                headers: new Headers({
-                    "ngrok-skip-browser-warning": "69420",
-                }),
-                body: data
-            })
-        )
+        return await useCustomFetch("PUT", this.BASE_URL, data)
     }
 
-    async deleteVideo(id: object) {
-        return await useAsyncData(() =>
-            $fetch(`${this.BASE_URL}${this.RESOURCE}`, {
-                method: 'DELETE',
-                headers: new Headers({
-                    "ngrok-skip-browser-warning": "69420",
-                }),
-                body: id
-            })
-        )
+    async deleteVideo(data: object) {
+        console.log('delete', data);
+        return await useCustomFetch("DELETE", this.BASE_URL, data)
     }
 
     async getVideoSource(id: string) {
-        return await useAsyncData("GET", () =>
-            $fetch(`${this.BASE_URL}${this.RESOURCE}/clip/${id}`)
-        )
+        return await useCustomFetch("GET", `${this.BASE_URL}/clip/${id}`)
     }
 }
 
