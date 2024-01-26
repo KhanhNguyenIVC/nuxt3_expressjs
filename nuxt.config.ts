@@ -27,7 +27,7 @@ export default defineNuxtConfig({
     apiSecret: process.env.SECRECT_API,
     public: {
       // Client side
-      apiBaseUrl: process.env.API_BASE_URL,
+      apiBaseUrl: process.env.API_BASE_URL ?? 'https://e7bd-14-161-35-142.ngrok-free.app',
       apiPublic: process.env.PUBLIC_API,
     }
   },
