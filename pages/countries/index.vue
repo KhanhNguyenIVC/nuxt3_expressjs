@@ -5,8 +5,9 @@ const snackbar = ref(false);
 const countryDetail = ref([]);
 const { data: countries } = await $api.countries.getAllCountries();
 
-const clickItem = (id) => {
-  getDetail(id);
+const clickItem = async (id) => {
+  const { data: detail } = await $api.countries.detail(id);
+  countryDetail.value = detail.value;
 };
 
 const updateCountry = async () => {
@@ -19,11 +20,6 @@ const updateCountry = async () => {
     snackbar.value = true;
   }
 };
-
-async function getDetail(id) {
-  const { data: detail } = await $api.countries.detail(id);
-  countryDetail.value = detail.value;
-}
 </script>
 
 <template>
@@ -42,8 +38,7 @@ async function getDetail(id) {
           <template v-slot:prepend>
             <v-icon :icon="item.icon"></v-icon>
           </template>
-
-          <v-list-item-title v-text="item.name"></v-list-item-title>
+          <v-list-item-title>{{ item.name }}</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-card>

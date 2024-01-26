@@ -1,5 +1,3 @@
-import { useCustomFetch } from "../../composables/customFetch"
-
 class VideosModule {
     private runtimeConfig = useRuntimeConfig()
     private BASE_URL = this.runtimeConfig.public.apiBaseUrl + '/videos'
@@ -21,7 +19,6 @@ class VideosModule {
     }
 
     async deleteVideo(data: object) {
-        console.log('delete', data);
         return await useCustomFetch("DELETE", this.BASE_URL, data)
     }
 

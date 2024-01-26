@@ -10,14 +10,18 @@ const getAll = async (req, res) => {
 }
 
 const detail = async (req, res) => {
-    const result = await Country.findOne({
-        where: {
-            id: {[Op.eq]: parseInt(req.params.id)},
-            name: {[Op.not] : null}
-        }
-    })
+    try {
+        const result = await Country.findOne({
+            where: {
+                id: { [Op.eq]: parseInt(req.params.id) },
+                name: { [Op.not]: null }
+            }
+        })
 
-    res.json(result)
+        res.json(result)
+    } catch (error) {
+        res.json({ status: false, error: error })
+    }
 }
 
 const edit = async (req, res) => {

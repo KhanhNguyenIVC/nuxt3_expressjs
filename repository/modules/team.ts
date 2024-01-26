@@ -1,15 +1,9 @@
-
 class TeamModule {
     private runtimeConfig = useRuntimeConfig()
-    private BASE_URL = this.runtimeConfig.public.apiBaseUrl
-    private RESOURCE = '/teams'
+    private BASE_URL = this.runtimeConfig.public.apiBaseUrl + '/teams'
 
     async getAll() {
-        return await useAsyncData(() =>
-            $fetch(`${this.BASE_URL}${this.RESOURCE}`, {
-                method: 'GET'
-            })
-        )
+        return await useCustomFetch('GET', this.BASE_URL)
     }
 }
 
