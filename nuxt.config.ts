@@ -20,6 +20,12 @@ export default defineNuxtConfig({
   app: {
     head: {
       // title: 'Nuxt 3'
+      script: [
+        // { src: "/js/webfont.js" },
+        // { src: "/js/snap.svg-min.js" },
+        // { src: "/js/underscore-min.js" },
+        // { src: "/js/sequence-diagram-min.js" },
+      ]
     },
     pageTransition: { name: 'page', mode: 'out-in' }
   },

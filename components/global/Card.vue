@@ -8,7 +8,7 @@ const animals = ref([
 </script>
 
 <template>
-  <v-card variant="outlined" class="pa-3">
+  <v-card variant="outlined" class="pa-5">
     <section>
       <h1 class="text-4xl"><slot /></h1>
 
