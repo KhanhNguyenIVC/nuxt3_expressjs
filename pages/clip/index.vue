@@ -17,6 +17,13 @@ const rules = ref([
 ]);
 
 const { data: videos } = await $api.videos.getAllVideos();
+const { data: nuxtDataVideos } = useNuxtData('videos')
+/**
+ * useNuxtData gives you access to the current cached value of useAsyncData,
+ *  useLazyAsyncData, useFetch and useLazyFetch with explicitly provided key ( for instance : 5hAxQF1ERv ).
+ *  */ 
+console.log('useNuxtData', nuxtDataVideos._object.$5hAxQF1ERv);
+
 const srcVideo = ref("");
 
 if (videoSelected.value.id != undefined) {

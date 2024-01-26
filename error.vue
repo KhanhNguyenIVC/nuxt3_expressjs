@@ -9,6 +9,6 @@ const handleError = () => clearError({ redirect: "/" });
 <template>
   <div>
     <h2>{{ error.statusCode }} - {{ error.statusMessage }}</h2>
-    <button @click="handleError">Go home page</button>
+    <v-btn @click="handleError">Go home page</v-btn>
   </div>
 </template>
