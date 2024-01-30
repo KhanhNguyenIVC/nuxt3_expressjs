@@ -12,7 +12,10 @@
   },
   "devDependencies": {
     "@nuxt/test-utils": "^3.10.0",
+    "@nuxtjs/i18n": "^8.0.0",
     "@vue/test-utils": "^2.4.3",
+    "@vueuse/core": "^10.7.2",
+    "@vueuse/nuxt": "^10.7.2",
     "happy-dom": "^13.2.1",
     "netlify-cli": "^17.15.2",
     "nuxt": "^3.9.0",

@@ -44,12 +44,17 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxt/content',
     '@pinia/nuxt',
+    '@nuxtjs/i18n',
+    '@vueuse/nuxt',
     (_options, nuxt) => {
       nuxt.hooks.hook('vite:extendConfig', (config) => {
         config.plugins.push(vuetify({ autoImport: true }))
       })
     },
   ],
+  i18n: {
+    vueI18n: './i18n.config.ts'
+  },
   experimental: {
     clientFallback: true,
     componentIslands: true,
