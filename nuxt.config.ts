@@ -61,6 +61,7 @@ export default defineNuxtConfig({
   },
   routeRules: {
     '/old-page': { redirect: '/state' },
+    // '/vueusecore': { ssr: false },
     // '/island' : {ssr : false} // only on client-side
     // '/blog/**': { swr: true },
     // '/blog/**': { swr: 600 },
