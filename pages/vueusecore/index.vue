@@ -1,5 +1,8 @@
 <script setup>
-import { OnClickOutside, UseDraggable } from "@vueuse/components";
+import {
+  OnClickOutside,
+  UseDraggable,
+} from "@vueuse/components";
 import { useGlobalState } from "@/stores/globalState";
 import {
   useDebouncedRefHistory,
@@ -10,6 +13,7 @@ import {
   useDropZone,
   useElementBounding,
   useIntersectionObserver,
+  useWindowSize,
 } from "@vueuse/core";
 
 const snackBarText = ref("");
@@ -120,6 +124,8 @@ const { stop } = useIntersectionObserver(
     targetIsVisible.value = isIntersecting;
   }
 );
+
+const { width: widthWindowSize, height: heightWindowSize } = useWindowSize()
 
 watch(
   txtLastChange,
@@ -259,7 +265,10 @@ watch(
 
       <hr />
       <h3>useIntersectionObserver</h3>
-      <span>targetIsVisible: </span><span style="font-weight: bold;color: #00ffff;">{{ targetIsVisible }}</span>
+      <span>targetIsVisible: </span
+      ><span style="font-weight: bold; color: #00ffff">{{
+        targetIsVisible
+      }}</span>
 
       <div class="scroll-area">
         <span>Scroll me down</span>
@@ -269,6 +278,11 @@ watch(
           </div>
         </div>
       </div>
+
+      <hr />
+      <h3>useWindowSize</h3>
+      <p>width: {{ widthWindowSize }}</p>
+      <p>height: {{ heightWindowSize }}</p>
 
       <v-snackbar v-model="snackbar">
         {{ snackBarText }}
