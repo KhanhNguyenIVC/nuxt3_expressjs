@@ -1,17 +1,21 @@
 <script setup>
-import { OnClickOutside } from "@vueuse/components";
+import { OnClickOutside, UseDraggable } from "@vueuse/components";
 import { useGlobalState } from "@/stores/globalState";
 import {
   useDebouncedRefHistory,
   useLastChanged,
   useStorage,
-  useActiveElement,
+  useDraggable,
+  useSessionStorage,
 } from "@vueuse/core";
+
+const snackBarText = ref("");
+const snackbar = ref(false);
 
 const { $api } = useNuxtApp();
 
 // tracks mouse position
-const { x, y } = useMouse();
+const { x: xPos, y: yPos } = useMouse();
 
 // persist state in localStorage
 const store = useLocalStorage("my-storage", {
@@ -62,12 +66,42 @@ onMounted(() => {
   console.log("useStorage", localStorage.getItem("my-store"));
 });
 
-const activeElement = useActiveElement();
+const txtKeySession = ref("");
+const txtValueSession = ref("");
+const setSession = () => {
+  useSessionStorage(txtKeySession.value, txtValueSession.value);
+  txtKeySession.value = "";
+  txtValueSession.value = "";
+  snackBarText.value = "Add session handling success";
+  snackbar.value = true;
+};
+// const clearSession = () => {
+//   console.log("clicked clear");
+//   // useSessionStorage.clear()
+//   windown.sessionStorage.clear()
+// };
+
+// const clearSession = computed(() => {
+//   window.sessionStorage.clear()
+//   console.log('destroyed session');
+// })
+
+function clearSession() {
+  window.sessionStorage.clear()
+  snackBarText.value = "Destroy session handling success";
+  snackbar.value = true;
+}
 
 watch(
   txtLastChange,
   (to, from) => {
-    console.log("tracking everything is changed here", '|| old value: ', from, '|| new value: ', to);
+    console.log(
+      "tracking everything is changed here",
+      "|| old value: ",
+      from,
+      "|| new value: ",
+      to
+    );
   },
   { deep: true, immediate: true }
 );
@@ -76,9 +110,14 @@ watch(
 <template>
   <div>
     <ClientOnly>
-      <div>pos: {{ x }} - {{ y }}</div>
+      <div>pos: {{ xPos }} - {{ yPos }}</div>
       <OnClickOutside
-        style="background-color: aqua; width: 160px; height: 90px"
+        style="
+          background-color: #00ffff;
+          width: 160px;
+          height: 50px;
+          border-radius: 5px;
+        "
         @trigger="clickOutside"
       >
         <div>Click outside of here</div>
@@ -135,6 +174,45 @@ watch(
         label="Type something"
       ></v-text-field>
       <p>{{ lastChange === null ? "" : new Date(lastChange) }}</p>
+
+      <hr />
+      <h3>useSessionStorage</h3>
+      <v-text-field v-model="txtKeySession" label="Type key session" />
+      <v-text-field v-model="txtValueSession" label="Type value session" />
+      <v-btn variant="tonal" @click="setSession">Set session</v-btn>
+      <v-btn variant="tonal" @click="clearSession">Clear session</v-btn>
+
+      <hr />
+      <h3>useDrag</h3>
+      <UseDraggable
+        v-slot="{ x, y }"
+        :initial-value="{ x: 100, y: 100 }"
+        storage-key="vueuse-draggable"
+        storage-type="session"
+        class="drag-item"
+      >
+        👋Drag me! I am at {{ x }}, {{ y }}
+      </UseDraggable>
+
+      <v-snackbar v-model="snackbar">
+        {{ snackBarText }}
+        <template v-slot:actions>
+          <v-btn color="pink" variant="text" @click="snackbar = false">
+            Close
+          </v-btn>
+        </template>
+      </v-snackbar>
     </ClientOnly>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.drag-item {
+  position: fixed;
+  cursor: pointer;
+  background-color: #00ffff;
+  width: 300px;
+  border-radius: 5px;
+  padding: 10px;
+}
+</style>
