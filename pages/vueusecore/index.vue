@@ -7,6 +7,9 @@ import {
   useStorage,
   useDraggable,
   useSessionStorage,
+  useDropZone,
+  useElementBounding,
+  useIntersectionObserver,
 } from "@vueuse/core";
 
 const snackBarText = ref("");
@@ -61,7 +64,6 @@ console.log("lastchange", lastChange);
 
 onMounted(() => {
   console.log("mounted hook");
-  // localStorage.setItem('my-store', '{"hello": "hello"}')
   console.log("useLocalStorage", localStorage.getItem("my-storage"));
   console.log("useStorage", localStorage.getItem("my-store"));
 });
@@ -75,22 +77,49 @@ const setSession = () => {
   snackBarText.value = "Add session handling success";
   snackbar.value = true;
 };
-// const clearSession = () => {
-//   console.log("clicked clear");
-//   // useSessionStorage.clear()
-//   windown.sessionStorage.clear()
-// };
-
-// const clearSession = computed(() => {
-//   window.sessionStorage.clear()
-//   console.log('destroyed session');
-// })
 
 function clearSession() {
-  window.sessionStorage.clear()
+  window.sessionStorage.clear();
   snackBarText.value = "Destroy session handling success";
   snackbar.value = true;
 }
+
+const dropZoneRef = ref(null);
+const fileUploads = ref();
+function onDrop(files) {
+  console.log("uploaded", files);
+  fileUploads.value = files;
+}
+function getScrImg(file) {
+  if (file) {
+    return URL.createObjectURL(file);
+  }
+}
+const { isOverDropZone } = useDropZone(dropZoneRef, {
+  onDrop,
+  dataTypes: ["image/png"],
+});
+
+const elBounding = ref(null);
+const {
+  x: xBounding,
+  y: yBounding,
+  top: topBounding,
+  right: rightBounding,
+  bottom: bottomBounding,
+  left: leftBounding,
+  width: widthBounding,
+  height: heightBounding,
+} = useElementBounding(elBounding);
+
+const target = ref(null);
+const targetIsVisible = ref(false);
+const { stop } = useIntersectionObserver(
+  target,
+  ([{ isIntersecting }], observerElement) => {
+    targetIsVisible.value = isIntersecting;
+  }
+);
 
 watch(
   txtLastChange,
@@ -183,7 +212,6 @@ watch(
       <v-btn variant="tonal" @click="clearSession">Clear session</v-btn>
 
       <hr />
-      <h3>useDrag</h3>
       <UseDraggable
         v-slot="{ x, y }"
         :initial-value="{ x: 100, y: 100 }"
@@ -194,6 +222,54 @@ watch(
         👋Drag me! I am at {{ x }}, {{ y }}
       </UseDraggable>
 
+      <hr />
+      <h3>DrogZone</h3>
+      <p>isOverDropZone: {{ isOverDropZone }}</p>
+      <div ref="dropZoneRef" class="drop-zone"><p>Drop files img(png)</p></div>
+      <div id="areaRenderFile">
+        <img
+          class="img-drop"
+          v-for="file in fileUploads"
+          :key="file"
+          :src="getScrImg(file)"
+        />
+      </div>
+
+      <hr />
+      <h3>useElementBounding</h3>
+      <div
+        ref="elBounding"
+        style="
+          background-color: #00ffff;
+          height: 230px;
+          width: 220px;
+          border-radius: 5px;
+        "
+      >
+        resize bounding:<br />
+        x: {{ xBounding }}<br />
+        y: {{ yBounding }}<br />
+        top: {{ topBounding }}<br />
+        right: {{ rightBounding }}<br />
+        bottom: {{ bottomBounding }}<br />
+        left: {{ leftBounding }}<br />
+        width: {{ widthBounding }}<br />
+        height: {{ heightBounding }}<br />
+      </div>
+
+      <hr />
+      <h3>useIntersectionObserver</h3>
+      <span>targetIsVisible: </span><span style="font-weight: bold;color: #00ffff;">{{ targetIsVisible }}</span>
+
+      <div class="scroll-area">
+        <span>Scroll me down</span>
+        <div class="s-scroll-area">
+          <div ref="target">
+            <h1>Hello world</h1>
+          </div>
+        </div>
+      </div>
+
       <v-snackbar v-model="snackbar">
         {{ snackBarText }}
         <template v-slot:actions>
@@ -203,6 +279,7 @@ watch(
         </template>
       </v-snackbar>
     </ClientOnly>
+    <br /><br /><br /><br />
   </div>
 </template>
 
@@ -214,5 +291,35 @@ watch(
   width: 300px;
   border-radius: 5px;
   padding: 10px;
+}
+
+.drop-zone {
+  width: 150px;
+  height: 150px;
+  background: #00ffff;
+  border-radius: 5px;
+  text-align: center;
+  p {
+    padding-top: 50px;
+  }
+}
+
+.img-drop {
+  width: 100px;
+  height: 100px;
+  border-radius: 5px;
+}
+
+.scroll-area {
+  height: 350px;
+  width: 250px;
+  background-color: aquamarine;
+  overflow: scroll;
+}
+
+.s-scroll-area {
+  height: 700px;
+  width: 250px;
+  padding-top: 350px;
 }
 </style>
